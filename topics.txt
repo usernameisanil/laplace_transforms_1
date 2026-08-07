@@ -1,28 +1,22 @@
 UNIT IV: Laplace Transforms
-----------------------------
-Introduction to Laplace Transforms.
-Definition of Laplace Transform.
-Conditions for existence of Laplace Transform.
-Transforms of elementary functions.
-Properties of Laplace Transforms:
-  - Linearity
-  - First shifting theorem (s-shifting)
-  - Second shifting theorem (t-shifting)
-  - Change of scale
-Laplace Transform of Periodic Functions.
-Special Functions:
-  - Unit Step Function (Heaviside)
-  - Unit Impulse Function (Dirac Delta)
-  - Gamma Function
-Laplace Transforms of Derivatives.
-Laplace Transforms of Integrals.
-Multiplication by t (and tⁿ).
-Division by t.
-Evaluation of Integrals using Laplace Transforms.
+---------------------------
+Introduction
+Definition
+Conditions for existence
+Transforms of elementary functions
+Properties of Laplace transforms
+Laplace transform of Periodic function
+Special functions
+Derivatives
+Integrals
+Multiplication by t
+Division by t
+Evaluation of integrals by Laplace transforms
 
 UNIT V: Inverse Laplace Transforms
 ------------------------------------
-Inverse Laplace Transform and Elementary Functions.
-Method of Partial Fractions.
-Convolution Theorem.
-Applications to Ordinary Differential Equations (ODEs).
+Inverse Laplace transform
+Elementary functions
+Method of Partial fractions
+Convolution theorem
+Applications to ordinary differential equations
