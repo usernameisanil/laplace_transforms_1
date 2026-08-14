@@ -1,19 +1,21 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
-            listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
+            listings, pgfplots, tcolorbox, fancyhdr, tikz, array}
+\usepackage[shortlabels]{enumitem}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
-% ── tcolorbox environments ─────────────────────────────────────────────────────
+% -- tcolorbox environments -----------------------------------------------------
 \newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 
 % ── lstlisting (Python) ────────────────────────────────────────────────────────
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
@@ -31,8 +33,8 @@
 % ── Title metadata ─────────────────────────────────────────────────────────────
 \title{Topic 12: Evaluation of Integrals by Laplace Transforms \\
        \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ══════════════════════════════════════════════════════════════════════════════
@@ -632,7 +634,7 @@ The upper-limit term always vanishes because the ratio tends to 1.
 \end{learnbox}
 
 % ══════════════════════════════════════════════════════════════════════════════
-\section{Excel Example (MANDATORY): Numerical Verification of
+\section{Excel Example : Numerical Verification of
          $\int_0^\infty e^{-t} t^3\, dt = 6$}
 
 We verify Classic Integral 5 for $n = 3$ (expected value $3! = 6$) using a
@@ -694,11 +696,9 @@ upper limit 20 is more than sufficient.
 \end{learnbox}
 
 % ══════════════════════════════════════════════════════════════════════════════
-\section{Python Example (MANDATORY): Numerical and Symbolic Verification}
+\section{Python Example : Numerical and Symbolic Verification}
 
-\begin{infobox}{Python Script: Verifying All Five Classic Integrals}
-
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Python Script: Verifying All Five Classic Integrals}]
 """
 Topic 12 - Evaluation of Integrals by Laplace Transforms
 Numerical (scipy) + Symbolic (sympy) verification of 5 classic integrals.
@@ -712,7 +712,7 @@ print("=" * 60)
 print("TOPIC 12: EVALUATION OF INTEGRALS BY LAPLACE TRANSFORMS")
 print("=" * 60)
 
-# ── Integral 1: int_0^inf sin(t)/t dt = pi/2 ────────────────────────────────
+# -- Integral 1: int_0^inf sin(t)/t dt = pi/2 --------------------------------
 result1_num, _ = quad(lambda t: np.sin(t) / t if t > 0 else 1.0, 0, np.inf,
                       limit=200)
 print(f"\nIntegral 1: int_0^inf sin(t)/t dt")
@@ -720,7 +720,7 @@ print(f"  Numerical : {result1_num:.6f}")   # 1.570796
 print(f"  pi/2      : {np.pi/2:.6f}")       # 1.570796
 print(f"  Match      : {np.isclose(result1_num, np.pi/2)}")  # True
 
-# ── Integral 2: int_0^inf e^{-t} sin(t)/t dt = pi/4 ────────────────────────
+# -- Integral 2: int_0^inf e^{-t} sin(t)/t dt = pi/4 ------------------------
 result2_num, _ = quad(lambda t: np.exp(-t) * np.sin(t) / t if t > 0 else 1.0,
                       0, np.inf)
 result2_exact = np.pi / 2 - np.arctan(1.0)
@@ -729,7 +729,7 @@ print(f"  Numerical : {result2_num:.6f}")    # 0.785398
 print(f"  pi/4      : {result2_exact:.6f}")  # 0.785398
 print(f"  Match      : {np.isclose(result2_num, result2_exact)}")  # True
 
-# ── Integral 3: int_0^inf t e^{-t} sin(t) dt = 1/2 ─────────────────────────
+# -- Integral 3: int_0^inf t e^{-t} sin(t) dt = 1/2 -------------------------
 result3_num, _ = quad(lambda t: t * np.exp(-t) * np.sin(t), 0, np.inf)
 result3_exact = 2 * 1 * 1 / (1 + 1) ** 2   # a=1, b=1 => 2ab/(a^2+b^2)^2
 print(f"\nIntegral 3: int_0^inf t e^{{-t}} sin(t) dt")
@@ -737,7 +737,7 @@ print(f"  Numerical : {result3_num:.6f}")     # 0.500000
 print(f"  2ab/(a^2+b^2)^2 = 1/2 : {result3_exact:.6f}")  # 0.500000
 print(f"  Match      : {np.isclose(result3_num, result3_exact)}")  # True
 
-# ── Integral 4: int_0^inf (e^{-t} - e^{-3t})/t dt = ln(3) ──────────────────
+# -- Integral 4: int_0^inf (e^{-t} - e^{-3t})/t dt = ln(3) ------------------
 result4_num, _ = quad(lambda t: (np.exp(-t) - np.exp(-3*t)) / t
                       if t > 0 else 2.0, 0, np.inf)
 result4_exact = np.log(3.0)
@@ -746,7 +746,7 @@ print(f"  Numerical : {result4_num:.6f}")     # 1.098612
 print(f"  ln(3)     : {result4_exact:.6f}")   # 1.098612
 print(f"  Match      : {np.isclose(result4_num, result4_exact)}")  # True
 
-# ── Integral 5: int_0^inf t^n e^{-t} dt = n! ────────────────────────────────
+# -- Integral 5: int_0^inf t^n e^{-t} dt = n! --------------------------------
 print(f"\nIntegral 5: int_0^inf t^n e^{{-t}} dt = n!")
 import math
 for n in range(1, 6):
@@ -760,12 +760,12 @@ for n in range(1, 6):
 # n=4: Numerical=24.0000, n!=24, Match=True
 # n=5: Numerical=120.0000, n!=120, Match=True
 
-# ── Sympy symbolic verification of Integral 1 ───────────────────────────────
+# -- Sympy symbolic verification of Integral 1 -------------------------------
 t_sym = sp.Symbol('t', positive=True)
 sinc_integral = sp.integrate(sp.sin(t_sym) / t_sym, (t_sym, 0, sp.oo))
 print(f"\nSympy symbolic: int_0^inf sin(t)/t dt = {sinc_integral}")  # pi/2
 
-# ── Sympy: Gamma function connection ────────────────────────────────────────
+# -- Sympy: Gamma function connection ----------------------------------------
 n_sym = sp.Symbol('n', nonneg=True, integer=True)
 gamma_check = sp.integrate(t_sym**3 * sp.exp(-t_sym), (t_sym, 0, sp.oo))
 print(f"Sympy: int_0^inf t^3 e^{{-t}} dt = {gamma_check}")  # 6
@@ -774,8 +774,6 @@ print("\n" + "=" * 60)
 print("All five classic integrals verified.")
 print("=" * 60)
 \end{lstlisting}
-
-\end{infobox}
 
 \begin{learnbox}{What Did We Learn?}
 \texttt{scipy.integrate.quad} confirms all five classic integrals numerically.

@@ -26,7 +26,7 @@
 
 % --- Title ---
 \title{Topic 05: Properties of Laplace Transforms \\ \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\ JNTUA College of Engineering (Autonomous)}
+\author{ \\ JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 \begin{document}
@@ -92,7 +92,7 @@ engineering practice.
 Think of a corporate phone system. The main office toll-free number is 1800-XXX-XXXX --- that
 is $F(s)$, the known transform. But every department has an extension: press $+3$ and you
 reach the Engineering Department, $+5$ and you reach Finance. Dialling the extension is exactly
-what the First Shifting Theorem does: it adds a shift to $s$, routing you to a ``nearby"
+what the First Shifting Theorem does: it adds a shift to $s$, routing you to a ``nearby''
 function in the transform domain.
 
 Similarly, when you record a voice message and play it back 2 seconds later, you have introduced
@@ -433,7 +433,7 @@ Division by $t$ &
   $\mathcal{L}\!\left\{\dfrac{f(t)}{t}\right\} = \displaystyle\int_s^{\infty} F(u)\,du$ &
   $\lim_{t\to 0^+}\dfrac{f(t)}{t}$ must exist \\
 \midrule
-Derivative of Transform &
+Transform of Derivative &
   $\mathcal{L}\{f'(t)\} = sF(s) - f(0)$ &
   Requires $f$ piecewise smooth \\
 \midrule
@@ -476,7 +476,7 @@ Transform of Integral &
 \end{infobox}
 
 \begin{learnbox}{What Did We Learn?}
-When $a$ is \emph{negative} (decay), the shift goes to the \emph{right} in $s$ (replace $s$ by $s+|a|$).
+When $a$ is \emph{negative} (decay, e.g., $e^{-2t}$), the shift goes to the \emph{left} in the complex $s$-plane (replace $s$ by $s+|a|$).
 The denominator becomes a completed square, which is the fingerprint of cosine (or sine) shifted.
 \end{learnbox}
 
@@ -544,7 +544,7 @@ makes this a one-step substitution from the $t^n$ table entry, regardless of $n$
 \end{learnbox}
 
 % ============================================================
-\section{Excel Example (MANDATORY)}
+\section{Excel Example }
 % ============================================================
 
 \textbf{Objective:} Numerically verify the First Shifting Theorem for
@@ -604,7 +604,7 @@ $s=4$, $a=2$, $b=1$. Numerical verification builds confidence in the algebraic t
 \end{learnbox}
 
 % ============================================================
-\section{Python Example (MANDATORY)}
+\section{Python Example }
 % ============================================================
 
 \begin{lstlisting}[language=Python, caption={Verifying Laplace Transform Properties using SymPy}]
@@ -792,7 +792,7 @@ $\sin(2t+\pi/3) = \sin(2t)\cos(\pi/3)+\cos(2t)\sin(\pi/3)
 = \tfrac{1}{2}\sin(2t) + \tfrac{\sqrt{3}}{2}\cos(2t)$;
 then apply linearity and the standard table.
 \textit{Answer:} $\dfrac{1}{2}\cdot\dfrac{2}{s^2+4}+\dfrac{\sqrt{3}}{2}\cdot\dfrac{s}{s^2+4}
-= \dfrac{1+\sqrt{3}\,s}{s^2+4}$.
+= \dfrac{2+\sqrt{3}s}{2(s^2+4)}$.
 
 \end{enumerate}
 
@@ -896,7 +896,7 @@ Sign error in First Shifting &
         $t$-shifting multiplies by $e^{-as}$ in frequency.
   \item \textbf{Unit step function key:} $u(t-a)$ is \emph{always} part of the answer for
         Second Shifting --- forgetting it is the most common exam error.
-  \item \textbf{Use the summary table:} Keep the 7-row properties table handy during problem
+  \item \textbf{Use the summary table:} Keep the 8-row properties table handy during problem
         solving --- it covers all scenarios in this topic.
 \end{itemize}
 \end{learnbox}

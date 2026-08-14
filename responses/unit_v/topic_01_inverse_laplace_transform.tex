@@ -30,8 +30,8 @@
 
 % --------------- title ---------------
 \title{Topic 01: Inverse Laplace Transform \\ \large Unit V --- Inverse Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques)\\
-JNTUA College of Engineering (Autonomous)}
+\author{\\
+JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ======================================================
@@ -470,9 +470,9 @@ Row & \textbf{A: $t$} & \textbf{B: $f(t)=e^{-2t}\sin(t)$}
     & \textbf{C: integrand $e^{-3t}f(t)$} & \textbf{D: Cumulative trap.~sum} \\
 \midrule
 1   & 0.0  & 0.000000 & 0.000000 & 0.000000 \\
-2   & 0.1  & 0.082085 & 0.060736 & 0.003037 \\
-3   & 0.2  & 0.130489 & 0.071498 & 0.009609 \\
-4   & 0.3  & 0.152628 & 0.062067 & 0.016538 \\
+2   & 0.1  & 0.081737 & 0.060552 & 0.003028 \\
+3   & 0.2  & 0.133172 & 0.073086 & 0.009710 \\
+4   & 0.3  & 0.162185 & 0.065939 & 0.016661 \\
 $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
 80  & 7.9  & $\approx 0$ & $\approx 0$ & $\approx 0.0385$ \\
 \bottomrule
@@ -596,8 +596,7 @@ sinusoidal entries in the inverse table combined with the shift theorem.
 \textbf{A:}
 $\mathcal{L}^{-1}\{1/s\}=1$; \quad
 $\mathcal{L}^{-1}\{1/s^2\}=t$; \quad
-$\mathcal{L}^{-1}\{a/(s^2+a^2)\}=\sin(at)$\; and\;
-$\mathcal{L}^{-1}\{s/(s^2+a^2)\}=\cos(at)$.
+$\mathcal{L}^{-1}\!\left\{\dfrac{1}{s^2+a^2}\right\}=\dfrac{1}{a}\sin(at)$\; (since $\mathcal{L}^{-1}\{a/(s^2+a^2)\}=\sin(at)$).
 
 \item \textbf{Q: What notation distinguishes the forward and inverse Laplace transforms?}\\
 \textbf{A:} $\mathcal{L}$ denotes the forward (direct) Laplace transform:

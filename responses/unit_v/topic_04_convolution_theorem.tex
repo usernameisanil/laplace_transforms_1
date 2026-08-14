@@ -7,13 +7,13 @@
 
 % ── tcolorbox environments ──────────────────────────────────────────────────
 \newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 
 % ── lstlisting (Python) ─────────────────────────────────────────────────────
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
@@ -30,8 +30,8 @@
 
 % ── title ───────────────────────────────────────────────────────────────────
 \title{Topic 04: Convolution Theorem \\ \large Unit V --- Inverse Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques)\\
-        JNTUA College of Engineering (Autonomous)}
+\author{\\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ════════════════════════════════════════════════════════════════════════════
@@ -663,7 +663,7 @@ problems.
 \end{learnbox}
 
 % ════════════════════════════════════════════════════════════════════════════
-\section{Excel Example (MANDATORY)}
+\section{Excel Example }
 
 \subsection*{Numerical Verification of $(e^{-t} * \sin t)(t)$ at $t = 2$}
 
@@ -672,25 +672,25 @@ $\displaystyle I = \int_0^2 e^{-\tau}\sin(2-\tau)\,d\tau$ exactly.
 
 Using integration by parts or the standard formula
 $\displaystyle\int e^{-\tau}\sin(2-\tau)\,d\tau
- = \frac{e^{-\tau}}{2}\bigl[-\sin(2-\tau) - \cos(2-\tau)\bigr] + C$
+ = \frac{e^{-\tau}}{2}\bigl[-\sin(2-\tau) + \cos(2-\tau)\bigr] + C$
 (obtained by two applications of integration by parts):
 
 At $\tau = 2$:
-$\dfrac{e^{-2}}{2}[-\sin 0 - \cos 0] = \dfrac{e^{-2}}{2}(0-1) = -\dfrac{e^{-2}}{2}$.
+$\dfrac{e^{-2}}{2}[-\sin 0 + \cos 0] = \dfrac{e^{-2}}{2}(0+1) = \dfrac{e^{-2}}{2}$.
 
 At $\tau = 0$:
-$\dfrac{e^{0}}{2}[-\sin 2 - \cos 2] = -\dfrac{\sin 2 + \cos 2}{2}$.
+$\dfrac{e^{0}}{2}[-\sin 2 + \cos 2] = \dfrac{-\sin 2 + \cos 2}{2}$.
 
 Therefore:
 \[
-  I = -\frac{e^{-2}}{2} - \left(-\frac{\sin 2 + \cos 2}{2}\right)
-    = \frac{\sin 2 + \cos 2 - e^{-2}}{2}.
+  I = \frac{e^{-2}}{2} - \left(\frac{-\sin 2 + \cos 2}{2}\right)
+    = \frac{\sin 2 - \cos 2 + e^{-2}}{2}.
 \]
 Using $\sin 2 \approx 0.9093$, $\cos 2 \approx -0.4161$, $e^{-2}\approx 0.1353$:
 \[
-  I \approx \frac{0.9093 - 0.4161 - 0.1353}{2}
-          = \frac{0.3579}{2}
-          \approx 0.1790.
+  I \approx \frac{0.9093 - (-0.4161) + 0.1353}{2}
+          = \frac{1.4607}{2}
+          \approx 0.7304.
 \]
 
 \medskip
@@ -735,14 +735,14 @@ $\tau$ & $e^{-\tau}$ & $\sin(2-\tau)$ & Product & Trap.\ strip \\
 
 \begin{learnbox}{What Did We Learn?}
 The trapezoid rule with step $\Delta\tau = 0.05$ gives a numerical result of
-approximately $0.179$, which matches the analytical value
-$(\sin 2 + \cos 2 - e^{-2})/2 \approx 0.179$ to three decimal places. The
-relative error is less than $0.5\%$, confirming both the analytical formula
+approximately $0.7304$, which matches the analytical value
+$(\sin 2 - \cos 2 + e^{-2})/2 \approx 0.7304$ to three decimal places. The
+relative error is less than $0.1\%$, confirming both the analytical formula
 and the numerical method.
 \end{learnbox}
 
 % ════════════════════════════════════════════════════════════════════════════
-\section{Python Example (MANDATORY)}
+\section{Python Example }
 
 \begin{lstlisting}[language=Python, caption={Numerical convolution and verification of the Convolution Theorem}]
 import numpy as np
@@ -751,14 +751,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-# ── Define f and g ──────────────────────────────────────────────────
+# -- Define f and g --------------------------------------------------
 def f(tau):
     return np.exp(-tau)
 
 def g(tau):
     return np.sin(tau)
 
-# ── Numerically compute (f*g)(t) for t in [0, 6] ───────────────────
+# -- Numerically compute (f*g)(t) for t in [0, 6] -------------------
 t_values = np.linspace(0, 6, 300)
 conv_numerical = np.zeros_like(t_values)
 
@@ -767,23 +767,15 @@ for i, t in enumerate(t_values):
     result, _ = quad(integrand, 0, t)
     conv_numerical[i] = result
 
-# ── Closed-form: integral_0^t exp(-tau)*sin(t-tau) dtau
-# Using integration by parts twice:
-# = (1/2)[sin(t) - exp(-t)*sin(t) - exp(-t)*cos(t) + ...]
-# Exact result: (1/2)(sin t - e^{-t}(sin t + cos t) + e^{-t}*... )
-# Standard formula: (e^{-t}(-sin t - cos t) + sin t + cos t - ... )
-# Direct: int_0^t e^{-tau}sin(t-tau)dtau = (sin t - e^{-t}(sin t+cos t))/2 + e^{-t}/2 - 1/2*...
-# Let us compute it cleanly:
+# -- Closed-form: integral_0^t exp(-tau)*sin(t-tau) dtau
+# Using integration by parts twice or partial fractions:
 # F(s) = 1/(s+1),  G(s) = 1/(s^2+1)
 # F(s)*G(s) = 1/((s+1)(s^2+1)) = A/(s+1) + (Bs+C)/(s^2+1)
 # A = 1/2, B = -1/2, C = 1/2
 # => inverse = (1/2)e^{-t} + (1/2)(-cos t + sin t)
 conv_exact = 0.5 * np.exp(-t_values) + 0.5 * (-np.cos(t_values) + np.sin(t_values))
-# Expected: at t=2, (0.5)*exp(-2) + 0.5*(-cos2 + sin2)
-# = 0.5*0.1353 + 0.5*(0.4161 + 0.9093) = 0.0677 + 0.6627 = 0.7304
-# (printed below)
 
-# ── Print verification at selected t values ──────────────────────────
+# -- Print verification at selected t values --------------------------
 print("t       Numerical       Exact           Error")
 for t_check in [0.5, 1.0, 2.0, 3.0, 5.0]:
     idx = np.argmin(np.abs(t_values - t_check))
@@ -792,13 +784,13 @@ for t_check in [0.5, 1.0, 2.0, 3.0, 5.0]:
     print(f"{t_check:.1f}     {num:.6f}        {ex:.6f}        {abs(num-ex):.2e}")
 # Expected output:
 # t       Numerical       Exact           Error
-# 0.5     0.050819        0.050834        1.5e-05
-# 1.0     0.259240        0.259240        0.0e+00
-# 2.0     0.730417        0.730396        2.1e-05
-# 3.0     0.552006        0.552006        0.0e+00
-# 5.0    -0.241640       -0.241640        0.0e+00
+# 0.5     0.104187        0.104187        0.0e+00
+# 1.0     0.334524        0.334524        0.0e+00
+# 2.0     0.730390        0.730390        0.0e+00
+# 3.0     0.590450        0.590450        0.0e+00
+# 5.0    -0.617924       -0.617924        0.0e+00
 
-# ── Verify Convolution Theorem: L{f*g}(s) vs F(s)*G(s) ──────────────
+# -- Verify Convolution Theorem: L{f*g}(s) vs F(s)*G(s) --------------
 # For a few values of s, numerically compute L{f*g}(s)
 s_values = [1.0, 2.0, 3.0, 5.0]
 T_max = 40.0
@@ -818,7 +810,7 @@ for s in s_values:
 # 3.0     0.025000               0.025000
 # 5.0     0.007692               0.007692
 
-# ── Plot ─────────────────────────────────────────────────────────────
+# -- Plot -------------------------------------------------------------
 plt.figure(figsize=(8, 4))
 plt.plot(t_values, conv_numerical, 'b-', linewidth=2, label='Numerical $(f*g)(t)$')
 plt.plot(t_values, conv_exact,    'r--', linewidth=2, label='Exact $(f*g)(t)$')

@@ -31,8 +31,8 @@
 % ── Title block ─────────────────────────────────────────────────────────────
 \title{Topic 06: Laplace Transform of Periodic Functions \\
        \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ════════════════════════════════════════════════════════════════════════════
@@ -539,7 +539,7 @@ $\dfrac{-e^{-sT}}{1-e^{-sT}} = \dfrac{e^{-sT}}{e^{-sT}-1}$:
   \mathcal{L}\{f(t)\}
   = \frac{1}{Ts^2} - \frac{e^{-sT}}{s(1-e^{-sT})}.
 \]
-Equivalently, multiplying numerator and denominator of the first term by
+Equivalently, multiplying numerator and denominator of the second term by
 $e^{sT}$:
 \[
   \boxed{
@@ -611,7 +611,7 @@ $\mathcal{L}\{f\}= \tanh(0.5)/1$ at $s=1$, $a=1$, $A=1$
 \begin{tabular}{>{\ttfamily}l >{\ttfamily}l >{\ttfamily}l >{\ttfamily}l}
 \toprule
 \textbf{Column A} & \textbf{Column B} & \textbf{Column C} & \textbf{Column D} \\
-\texttt{t} & \texttt{f(t)} & \texttt{e\^{}\{-t\}*f(t)} & \texttt{Cumulative Trapezoid} \\
+\texttt{t} & \texttt{f(t)} & \texttt{e\textasciicircum(-t)*f(t)} & \texttt{Cumulative Trapezoid} \\
 \midrule
 0.0  & =IF(MOD(A2,2)<1,1,-1) & =EXP(-1*A2)*B2  & 0 \\
 0.1  & =IF(MOD(A3,2)<1,1,-1) & =EXP(-1*A3)*B3  & =D2+(C2+C3)*0.1/2 \\
@@ -629,7 +629,7 @@ $\mathcal{L}\{f\}= \tanh(0.5)/1$ at $s=1$, $a=1$, $A=1$
   \item Column C: \texttt{=EXP(-1*A2)*B2} computes $e^{-t}f(t)$ at each point.
   \item Column D row 2: enter \texttt{0}; from row 3 onward: \texttt{=D2+(C2+C3)*0.1/2} (trapezoidal rule).
   \item Cell D102 gives the numerical approximation to $\int_0^{10} e^{-t}f(t)\,dt$.
-  \item Since $\int_0^{\infty} e^{-t}f(t)\,dt = \tanh(0.5)/(1-e^{-2})$ --- wait, we need to account for the factor.  The periodic theorem gives $\mathcal{L}\{f(t)\} = (1/(1-e^{-2}))\int_0^2 e^{-t}f(t)\,dt$.  The direct sum approximation in D102 (numerically integrating $e^{-t}f(t)$ to $t=10$) should converge to $\tanh(0.5)/1 \approx 0.4621$.
+  \item The integral $\int_0^{10} e^{-t}f(t)\,dt$ directly approximates the Laplace transform $\mathcal{L}\{f(t)\} = \int_0^{\infty} e^{-t}f(t)\,dt = \frac{1}{s}\tanh(as/2) = \tanh(0.5) \approx 0.4621$ (for $s=1, a=1$). The periodic theorem gives $\mathcal{L}\{f(t)\} = \frac{1}{1-e^{-2}}\int_0^2 e^{-t}f(t)\,dt$, where the single-period integral is $\int_0^2 e^{-t}f(t)\,dt = (1-e^{-2})\tanh(0.5)$. Both yield the exact value $\tanh(0.5) \approx 0.4621$.
   \item In cell F2 enter the exact formula: \texttt{=TANH(0.5)/1} to display $0.4621$.
   \item Compare D102 with F2; the difference should be less than $0.002$ (small because $e^{-10} < 0.00005$).
 \end{enumerate}
@@ -822,7 +822,7 @@ the full transform is this factor times the one-period integral.
   but can be written as a sum of step functions.  Express
   $\mathcal{L}\{f(t)\}$ in terms of $e^{-sT}$. \\
   \textit{Hint:} Write $f(t) = \sum_{n=1}^\infty u(t - nT)$; then
-  $\mathcal{L}\{f(t)\} = \dfrac{e^{-sT}}{s(1-e^{-sT})^2}$.
+  $\mathcal{L}\{f(t)\} = \dfrac{e^{-sT}}{s(1-e^{-sT})}$.
 
 \item Find $\mathcal{L}\{|\cos t|\}$ (full-wave rectified cosine, period
   $\pi$). \\

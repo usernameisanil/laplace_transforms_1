@@ -1,14 +1,16 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
-            listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
+            listings, pgfplots, tcolorbox, fancyhdr, tikz, array}
+\usepackage[shortlabels]{enumitem}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
-\newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black, fonttitle=\bfseries, title=#1, breakable}
+\newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black, fonttitle=\bfseries, title={#1}, breakable}
 
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
         commentstyle=\color{gray}, stringstyle=\color{orange},
@@ -23,8 +25,8 @@
 
 \title{Topic 09: Laplace Transform of Integrals \\
        \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 \begin{document}
@@ -371,8 +373,9 @@ Take its transform:
   = \frac{1}{3}\left(\frac{1}{s} - \frac{s}{s^2+9}\right)
   = \frac{1}{3}\cdot\frac{(s^2+9) - s^2}{s(s^2+9)}
   = \frac{1}{3}\cdot\frac{9}{s(s^2+9)}
-  = \frac{3}{s(s^2+9)}. \;\checkmark
+  = \frac{3}{s(s^2+9)}.
 \]
+Both methods agree. $\checkmark$
 \end{infobox}
 
 \begin{learnbox}{What Did We Learn? (Example 2)}
@@ -380,7 +383,7 @@ For a sine function, the theorem gives $F(s)/s = 3/[s(s^2+9)]$. Splitting
 $1 - \cos(3t)$ into two transforms and combining confirms the result.
 \end{learnbox}
 
-\begin{infobox}{Example 3: Solve $y(t) = t - \int_0^t y(\tau)\,d\tau$}
+\begin{infobox}{Example 3: Solve $y(t) = t - \int_{0}^{t} y(\tau)\,d\tau$}
 
 This is a Volterra integral equation of the second kind with $g(t) = t$.
 
@@ -411,11 +414,12 @@ This is a Volterra integral equation of the second kind with $g(t) = t$.
 \]
 
 \textbf{Verification.} $y(t) = 1 - e^{-t}$ and $\int_0^t y(\tau)\,d\tau
-= \int_0^t (1 - e^{-\tau})\,d\tau = [t + e^{-\tau}]_0^t - [e^{-\tau}]_0^t$
+= \int_0^t (1 - e^{-\tau})\,d\tau = [\tau + e^{-\tau}]_0^t = (t + e^{-t}) - (0 + 1)$
 $= t + e^{-t} - 1$. Then:
 \[
-  t - \int_0^t y(\tau)\,d\tau = t - (t + e^{-t} - 1) = 1 - e^{-t} = y(t). \;\checkmark
+  t - \int_0^t y(\tau)\,d\tau = t - (t + e^{-t} - 1) = 1 - e^{-t} = y(t).
 \]
+Matches $y(t)$. $\checkmark$
 \end{infobox}
 
 \begin{learnbox}{What Did We Learn? (Example 3)}
@@ -453,7 +457,7 @@ Division by $t$: $f(t)/t$ &
 \end{center}
 
 %% -------------------------------------------------------
-\section{Excel Example (MANDATORY)}
+\section{Excel Example }
 %% -------------------------------------------------------
 
 We numerically verify
@@ -473,7 +477,7 @@ from $t = 0$ to $t = 6$):}
 Row & Column A & Column B & Column C & Column D \\
     & $t$      & $g(t) = 1 - e^{-t}$ & $e^{-2t}\,g(t)$ & Cumul.\ Trapezoid Sum \\
 \midrule
-1   & \texttt{t} & \texttt{g(t)} & \texttt{e\^{}\{-2t\}*g(t)} & \texttt{Trap.\ Sum} \\
+1   & \texttt{t} & \texttt{g(t)} & \texttt{e\textasciicircum\{-2t\}*g(t)} & \texttt{Trap.\ Sum} \\
 2   & \texttt{0} & \texttt{=1-EXP(-A2)} & \texttt{=EXP(-2*A2)*B2} & \texttt{0} \\
 3   & \texttt{=A2+0.1} & \texttt{=1-EXP(-A3)} & \texttt{=EXP(-2*A3)*B3} &
       \texttt{=D2+0.5*(C2+C3)*0.1} \\
@@ -499,9 +503,9 @@ Row & Column A & Column B & Column C & Column D \\
 $t$ & $g(t) = 1-e^{-t}$ & $e^{-2t}g(t)$ & Cumul.\ Trap.\ Sum \\
 \midrule
 $0.0$ & $0.00000$ & $0.00000$ & $0.00000$ \\
-$0.5$ & $0.39347$ & $0.14463$ & $0.04928$ \\
+$0.5$ & $0.39347$ & $0.14475$ & $0.04928$ \\
 $1.0$ & $0.63212$ & $0.08556$ & $0.10891$ \\
-$2.0$ & $0.86466$ & $0.01574$ & $0.15296$ \\
+$2.0$ & $0.86466$ & $0.01584$ & $0.15296$ \\
 $3.0$ & $0.95021$ & $0.00236$ & $0.16444$ \\
 $6.0$ & $0.99752$ & $0.00001$ & $0.16658$ \\
 \bottomrule
@@ -515,7 +519,7 @@ and the truncation at $t = 6$. A smaller step or larger upper limit improves acc
 \end{learnbox}
 
 %% -------------------------------------------------------
-\section{Python Example (MANDATORY)}
+\section{Python Example }
 %% -------------------------------------------------------
 
 \begin{lstlisting}[language=Python, caption={Laplace Transform of Integrals --- Symbolic Verification}]
@@ -711,8 +715,7 @@ algebraic problem in the $s$-domain? Give one example for each operation.}
 \begin{enumerate}[label=\textbf{P\arabic*.}, leftmargin=*, itemsep=8pt]
 
 \item Find $\mathcal{L}\!\left\{\displaystyle\int_0^t \cos(2\tau)\,d\tau\right\}$.
-  \hfill\textit{Hint: $\mathcal{L}\{\cos(2t)\} = s/(s^2+4)$; answer: $s/[s(s^2+4)] = 1/(s^2+4)$... 
-  wait: $F(s)/s = s/[(s^2+4)\cdot s] = 1/(s^2+4)$. Answer: $\dfrac{1}{s^2+4}$.}
+  \hfill\textit{Hint: $\mathcal{L}\{\cos(2t)\} = \dfrac{s}{s^2+4}$; then $\dfrac{F(s)}{s} = \dfrac{1}{s^2+4}$. Answer: $\dfrac{1}{s^2+4}$.}
 
 \item Find $\mathcal{L}\!\left\{\displaystyle\int_0^t \tau e^{-\tau}\,d\tau\right\}$.
   \hfill\textit{Hint: $\mathcal{L}\{te^{-t}\} = 1/(s+1)^2$; answer: $\dfrac{1}{s(s+1)^2}$.}
@@ -723,7 +726,7 @@ algebraic problem in the $s$-domain? Give one example for each operation.}
 
 \item Solve the integral equation $y(t) = \sin t - \displaystyle\int_0^t y(\tau)\,d\tau$.
   \hfill\textit{Hint: $Y(s)(1+1/s) = 1/(s^2+1)$; $Y(s) = s/[(s+1)(s^2+1)]$;
-  partial fractions give $y(t) = \tfrac{1}{2}e^{-t} + \tfrac{1}{2}\sin t - \tfrac{1}{2}\cos t$.}
+  partial fractions give $y(t) = -\tfrac{1}{2}e^{-t} + \tfrac{1}{2}\sin t + \tfrac{1}{2}\cos t$.}
 
 \item Find $\mathcal{L}\!\left\{\displaystyle\int_0^t\!\int_0^{t_1} e^{-\tau}\,d\tau\,dt_1\right\}$.
   \hfill\textit{Hint: repeated integration; $\mathcal{L}\{e^{-t}\} = 1/(s+1)$;

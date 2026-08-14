@@ -1,19 +1,21 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
-            listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
+            listings, pgfplots, tcolorbox, fancyhdr, tikz, array}
+\usepackage[shortlabels]{enumitem}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
 % ---- tcolorbox environments ----
 \newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 
 % ---- lstlisting (Python) ----
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
@@ -29,8 +31,8 @@
 \cfoot{\thepage}
 
 \title{Topic 10: Multiplication by t \\ \large Unit IV --- Laplace Transforms}
-\author{JNTUA College of Engineering (Autonomous)\\
-        23A54201 --- Mathematics IV (Transform Techniques)}
+\author{JNTUA College of Engineering (Autonomous) ATP\\
+        }
 \date{}
 
 \begin{document}
@@ -157,8 +159,9 @@ After one application: $\mathcal{L}\{t\,f(t)\} = -F'(s)$.
 Apply it again with $g(t)=t\,f(t)$, so $G(s)=-F'(s)$:
 \[
   \mathcal{L}\{t^2 f(t)\} = -\frac{d}{ds}G(s) = -\frac{d}{ds}\bigl[-F'(s)\bigr]
-  = F''(s) = (-1)^2 F''(s). \checkmark
+  = F''(s) = (-1)^2 F''(s).
 \]
+Matches the formula for $n=2$. $\checkmark$
 Applying $n$ times in this fashion gives the general result.
 
 \textbf{The $n=2$ case explicitly:}
@@ -246,9 +249,9 @@ so
   = (-1)^n \cdot \frac{(-1)^n n!}{(s-a)^{n+1}}
   = \frac{n!}{(s-a)^{n+1}}.
 \]
-Verification: $n=1$: $1!/(s-a)^2=1/(s-a)^2$ \checkmark;
-$n=2$: $2!/(s-a)^3=2/(s-a)^3$ \checkmark;
-$n=3$: $3!/(s-a)^4=6/(s-a)^4$ \checkmark.
+Verification: $n=1$: $1!/(s-a)^2=1/(s-a)^2$ $\checkmark$;
+$n=2$: $2!/(s-a)^3=2/(s-a)^3$ $\checkmark$;
+$n=3$: $3!/(s-a)^4=6/(s-a)^4$ $\checkmark$.
 \end{infobox}
 
 % =========================================================
@@ -377,14 +380,10 @@ We use $\mathcal{L}\{tf(t)\}=-F'(s)$ with $F(s)=\ln(s^2+a^2)$.
   \mathcal{L}\{tf(t)\} = -F'(s) = -\frac{2s}{s^2+a^2}.
 \]
 
-Note: the negative sign is essential. The result tells us that if some function
-$f(t)$ has Laplace transform $\ln(s^2+a^2)$, then multiplying $f(t)$ by $t$
-produces a transform of $-2s/(s^2+a^2)$.
+\textbf{Pedagogical Note:} In rigorous transform theory, a valid Laplace transform of an exponential-order function must satisfy $\lim_{s \to \infty} F(s) = 0$. Because $\lim_{s \to \infty} \ln(s^2+a^2) = \infty$, no classical function possesses $\ln(s^2+a^2)$ as its standard Laplace transform. However, this problem is a standard formal operational exercise in transform calculus to practice applying the differentiation rule $\mathcal{L}\{tf(t)\} = -F'(s)$ algebraically.
 \end{infobox}
 \begin{learnbox}{What Did We Learn? (Example 3)}
-The multiplication-by-$t$ formula works regardless of whether we know $f(t)$
-explicitly --- only $F(s)$ needs to be differentiable. Here $F(s)=\ln(s^2+a^2)$
-differentiates easily by the chain rule.
+The multiplication-by-$t$ formula works purely algebraically on any differentiable $F(s)$ --- only $F'(s)$ needs to be computed. Here $F(s)=\ln(s^2+a^2)$ differentiates easily by the chain rule to give $-2s/(s^2+a^2)$.
 \end{learnbox}
 
 % =========================================================

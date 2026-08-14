@@ -1,7 +1,8 @@
 \documentclass[12pt,a4paper]{article}
-\usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
+\usepackage{amsmath, amssymb, amsthm, mathtools, geometry, booktabs, xcolor, hyperref,
             listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
@@ -31,8 +32,8 @@
 % ── title ────────────────────────────────────────────────────────────────────
 \title{Topic 02: Definition of Laplace Transform \\
        \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -524,14 +525,17 @@ $t$ & $e^{-5t} \cdot e^{-2t}$ & Cumulative Trapezoid Area \\
 Column B evaluates $e^{-7t}$ at each row (note: \texttt{EXP(-5*A2)*EXP(-2*A2)}
 $= e^{-7 \times 0} = 1$ at $t=0$, and approaches 0 rapidly).
 Column C accumulates the trapezoid area strip by strip.
-At $t = 5$ the cumulative area in cell C12 will read approximately
-$\mathbf{0.1429}$, matching the exact value.
+Because $e^{-7t}$ decays very rapidly, the first strip alone ($t=0$ to $0.5$)
+yields an area of $\frac{0.5}{2}(1 + e^{-3.5}) \approx 0.2575$.
+The cumulative sum with step size $h = 0.5$ reaches $\mathbf{0.2656}$ at $t = 5$
+(an overestimation of $\approx 86\%$ above the exact value $1/7 \approx 0.1429$
+because a linear chord overestimates a strictly convex decaying curve over a coarse interval).
+To approach $\mathbf{0.1429}$ accurately, the step size in Excel must be refined
+(e.g., $h \le 0.05$, where $h=0.05$ yields $0.1443$ and $h=0.01$ yields $0.1429$).
 
 \begin{learnbox}{What Did We Learn?}
-The trapezoid sum from $t = 0$ to $t = 5$ gives $\approx 0.1429$, confirming
-the analytical result $\mathcal{L}\{e^{-2t}\}\big|_{s=5} = 1/7 \approx 0.1429$.
-The tail beyond $t = 5$ contributes less than $e^{-35} \approx 6 \times 10^{-16}$
-and is negligible. Numerical verification builds confidence in symbolic results.
+The exact analytical value is $\mathcal{L}\{e^{-2t}\}\big|_{s=5} = \frac{1}{5+2} = \frac{1}{7} \approx 0.1429$.
+For rapidly decaying functions like $e^{-7t}$, coarse discretisation ($h = 0.5$) gives $0.2656$; refining the step size to $h \le 0.05$ brings the numerical trapezoid sum to $0.1429$. The tail beyond $t = 5$ contributes less than $e^{-35} \approx 6 \times 10^{-16}$ and is negligible.
 \end{learnbox}
 
 % =============================================================================

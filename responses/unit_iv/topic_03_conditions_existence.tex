@@ -2,14 +2,15 @@
 \usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
             listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
 % ---- tcolorbox environments ----
-\newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black, fonttitle=\bfseries, title=#1, breakable}
-\newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black, fonttitle=\bfseries, title=#1, breakable}
+\newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black, fonttitle=\bfseries, title={#1}, breakable}
+\newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black, fonttitle=\bfseries, title={#1}, breakable}
 
 % ---- lstlisting for Python ----
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
@@ -26,8 +27,8 @@
 
 \title{Topic 03: Conditions for Existence of Laplace Transform \\
        \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 \begin{document}
@@ -271,7 +272,7 @@ which exists for $s > 0$ via the Gamma function connection.
 \end{infobox}
 
 % =============================================================
-\section{Behaviour of $F(s)$ as $s \to \infty$}
+\section{\texorpdfstring{Behaviour of $F(s)$ as $s \to \infty$}{Behaviour of F(s) as s -> oo}}
 % =============================================================
 
 \begin{infobox}{Corollary: $F(s) \to 0$ as $s \to \infty$}
@@ -462,18 +463,20 @@ Fill A2:A14 with $t = 0, 0.25, 0.5, \ldots, 3.0$ in steps of $0.25$.
 $t$ & $e^{-5t} \cdot t^3$ & $e^{-5t} \cdot e^{t^2}$ \\
 \midrule
 0.00  & 0.000000       & 1.000000   \\
-0.50  & 0.000474       & 1.284025   \\
-1.00  & 0.006738       & 40.343     \\
-1.50  & 0.003355       & 35957      \\
-2.00  & 0.000490       & \texttt{\#NUM!} (overflow) \\
-3.00  & 0.000000       & \texttt{\#NUM!} (overflow) \\
+0.50  & 0.010261       & 0.105399   \\
+1.00  & 0.006738       & 0.018316   \\
+1.50  & 0.001867       & 0.005248   \\
+2.00  & 0.000363       & 0.002479   \\
+3.00  & 0.000008       & 0.002479   \\
+5.00  & 0.000000       & 1.000000   \\
+6.00  & 0.000000       & 403.428793 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip
-Column B shrinks steadily toward zero --- the exponential damping wins.
-Column C explodes to overflow (the exponential order condition is violated by $e^{t^2}$).
+Column B shrinks steadily toward zero --- the exponential damping factor dominates $t^3$.
+Column C initially decreases on $[0, 2.5]$ (since the exponent $t^2 - 5t = t(t-5) \le 0$ for $t \in [0, 5]$), reaching a minimum of $e^{-6.25} \approx 0.00193$ at $t = 2.5$, returns to $1.0$ at $t = 5.0$, and explodes rapidly for $t > 5$ ($t = 6 \implies 403.43$, $t = 7 \implies 1.37 \times 10^5$, rapidly overflowing). Because $e^{t^2}$ violates the exponential order condition, no constant $s$ can prevent it from exploding as $t \to \infty$.
 
 \medskip
 \noindent\textbf{Verify the exact value:}
@@ -482,12 +485,9 @@ Numerically integrate column B (using the Trapezoidal Rule or \texttt{=SUMPRODUC
 $t = 0$ to $t = 3$ with step $0.25$ and confirm the result is close to $0.0096$.
 
 \begin{learnbox}{What Did We Learn? (Excel)}
-Column B (convergent integrand) shrinks to zero as $t$ grows, confirming the Laplace integral
-will be finite.
-Column C (divergent integrand) explodes at moderate values of $t$, confirming that
-$\mathcal{L}\{e^{t^2}\}$ cannot exist.
-The spreadsheet provides direct numerical evidence for what the existence theorem says
-analytically.
+Column B (convergent integrand) shrinks to zero as $t$ grows, confirming the Laplace integral converges to $\mathcal{L}\{t^3\}\big|_{s=5} = 6/625 = 0.0096$.
+Column C (divergent integrand) remains bounded while $t \le 5$, but explodes once $t > 5$, confirming that $\mathcal{L}\{e^{t^2}\}$ cannot exist for any $s$.
+The spreadsheet provides direct numerical evidence for what the existence theorem says analytically.
 \end{learnbox}
 
 % =============================================================
@@ -525,26 +525,30 @@ def integrand_divergent(t):
     return np.exp(-s * t) * np.exp(t**2)
 
 print("Attempting to integrate exp(-5t)*exp(t^2) from 0 to T:")
-for T in [2, 3, 5]:
+for T in [2, 3, 5, 7, 10]:
     try:
         val, err = integrate.quad(integrand_divergent, 0, T,
                                    limit=100, epsabs=1e-4, epsrel=1e-4)
-        print(f"  T={T}: value = {val:.4e}  (note: very large, growing)")
+        print(f"  T={T:2d}: value = {val:.4e}")
     except Exception as e:
-        print(f"  T={T}: Integration failed -- {e}")
+        print(f"  T={T:2d}: Integration failed -- {e}")
 
 # Expected output:
 # Attempting to integrate exp(-5t)*exp(t^2) from 0 to T:
-#   T=2: value = 3.5941e+04  (note: very large, growing)
-#   T=3: value = 2.7407e+12  (note: very large, growing)
-#   T=5: Integration failed -- or returns overflow/IntegrationWarning
+#   T= 2: value = 2.2203e-01
+#   T= 3: value = 2.2414e-01
+#   T= 5: value = 4.4617e-01
+#   T= 7: value = 1.3720e+05  (rapid growth begins once t > 5)
+#   T=10: value = 3.4881e+20  (diverges explosively; overflow for larger T)
 \end{lstlisting}
 
 \begin{learnbox}{What Did We Learn? (Python)}
 The numerical integration of $e^{-5t} \cdot t^3$ converges quickly and matches the exact
 value $6/625 = 0.0096$ to many decimal places, even by $T = 10$.
-In contrast, $e^{-5t} \cdot e^{t^2}$ produces enormous values even for moderate $T$,
-confirming divergence and the absence of a Laplace transform.
+In contrast, while $e^{-5t} \cdot e^{t^2}$ is bounded on $[0, 5]$ because $t^2 - 5t \le 0$,
+the integrand grows super-exponentially once $t > 5$, causing the integral to explode to
+infinity as $T$ increases ($1.37 \times 10^5 \to 3.49 \times 10^{20} \to \infty$) and
+confirming that no Laplace transform exists.
 \end{learnbox}
 
 % =============================================================

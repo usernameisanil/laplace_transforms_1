@@ -1,37 +1,39 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{amsmath, amssymb, geometry, booktabs, xcolor, hyperref,
-            listings, pgfplots, tcolorbox, enumitem, fancyhdr, tikz, array}
+            listings, pgfplots, tcolorbox, fancyhdr, tikz, array}
+\usepackage[shortlabels]{enumitem}
 \geometry{margin=2.5cm}
+\setlength{\headheight}{14.5pt}
 \pgfplotsset{compat=1.18}
 \tcbuselibrary{skins, breakable}
 
-% ── tcolorbox environments ──────────────────────────────────────────────────
+% -- tcolorbox environments --------------------------------------------------
 \newtcolorbox{curiositybox}[1]{colback=yellow!10, colframe=orange!80!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{infobox}[1]{colback=blue!5, colframe=blue!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{mistakebox}[1]{colback=red!5, colframe=red!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 \newtcolorbox{learnbox}[1]{colback=green!5, colframe=green!60!black,
-  fonttitle=\bfseries, title=#1, breakable}
+  fonttitle=\bfseries, title={#1}, breakable}
 
-% ── listings (Python) ───────────────────────────────────────────────────────
+% -- listings (Python) -------------------------------------------------------
 \lstset{language=Python, basicstyle=\ttfamily\small, keywordstyle=\color{blue},
         commentstyle=\color{gray}, stringstyle=\color{orange},
         showstringspaces=false, numbers=left, numberstyle=\tiny,
         breaklines=true, frame=single}
 
-% ── fancyhdr ────────────────────────────────────────────────────────────────
+% -- fancyhdr ----------------------------------------------------------------
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{Topic 11: Division by t}
 \rhead{Unit IV --- Laplace Transforms}
 \cfoot{\thepage}
 
-% ── title ───────────────────────────────────────────────────────────────────
+% -- title -------------------------------------------------------------------
 \title{Topic 11: Division by t \\ \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques)\\
-        JNTUA College of Engineering (Autonomous)}
+\author{\\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ============================================================================
@@ -233,7 +235,7 @@ Let $f(t) = e^{at} - e^{bt}$ (assume $s > \max(a,b)$ for convergence). Then
 \[
   \lim_{t\to 0^+}\frac{e^{at}-e^{bt}}{t}
   = \lim_{t\to 0}\frac{(1+at+\cdots)-(1+bt+\cdots)}{t}
-  = a - b \quad(\text{finite}).\ \checkmark
+  = a - b \quad(\text{finite}). \quad\text{\checkmark}
 \]
 
 \textbf{Apply the theorem:}
@@ -324,13 +326,13 @@ $\lim_{t\to 0^+}\dfrac{\sin^2 t}{t^2} = 1$ (finite). \checkmark
   = \int_s^\infty H(u)\,du
   = \frac{1}{4}\int_s^\infty \ln\frac{u^2+4}{u^2}\,du.
 \]
-Using the standard result $\int \ln\!\left(1+a^2/u^2\right)du = u\ln(u^2+a^2) - 2u + 2a\arctan(u/a) - u\ln(u^2) + C$ with $a=2$ and evaluating from $s$ to $\infty$ gives:
+Using integration by parts ($\int \ln(1+4/u^2)\,du = u\ln(1+4/u^2) + 4\arctan(u/2)$) and evaluating from $s$ to $\infty$ gives:
 \[
   \mathcal{L}\!\left\{\frac{\sin^2 t}{t^2}\right\}
-  = s - \frac{1}{4}s\ln\frac{s^2+4}{s^2} + \arctan\!\left(\frac{s}{2}\right)
+  = \frac{\pi}{2} - \arctan\!\left(\frac{s}{2}\right) - \frac{s}{4}\ln\!\left(1+\frac{4}{s^2}\right)
+  = \operatorname{arccot}\!\left(\frac{s}{2}\right) - \frac{s}{4}\ln\!\left(\frac{s^2+4}{s^2}\right)
     \quad\bigl(s>0\bigr).
 \]
-(Alternatively expressed as $\frac{\pi}{2} - \arctan(s/2) - \frac{s}{4}\ln\!\left(1+4/s^2\right)$.)
 \end{infobox}
 
 \begin{learnbox}{What Did We Learn?}
@@ -364,11 +366,11 @@ of the Laplace transform. Memorise them as two symmetric pairs:
 differentiation/integration in $t$ and multiplication/division by $t$.
 \end{learnbox}
 
-% ============================================================================
+% ----------------------------------------------------------------------------
 \section{Worked Examples}
 
-% ── Example 1 ────────────────────────────────────────────────────────────────
-\begin{infobox}{Example 1: $\mathcal{L}\{(\cos(at)-\cos(bt))/t\}$}
+% -- Example 1 ----------------------------------------------------------------
+\begin{infobox}{Example 1: $\mathcal{L}\!\left\{\frac{\cos(at)-\cos(bt)}{t}\right\}$}
 \textbf{Given:} Find $\mathcal{L}\!\left\{\dfrac{\cos(at)-\cos(bt)}{t}\right\}$
 for constants $a\neq b$ and $s>0$.
 
@@ -380,7 +382,7 @@ Both $\cos(at)\to 1$ and $\cos(bt)\to 1$ as $t\to 0$, so the numerator $\to 0$.
 Apply L'H\^{o}pital's rule:
 \[
   \lim_{t\to 0}\frac{-a\sin(at)+b\sin(bt)}{1}
-  = -a\cdot 0 + b\cdot 0 = 0 \quad(\text{finite}).\ \checkmark
+  = -a\cdot 0 + b\cdot 0 = 0 \quad(\text{finite}). \quad\text{\checkmark}
 \]
 
 \textbf{Step 2 --- Identify $F(s)$.}
@@ -423,8 +425,8 @@ Integrating $u/(u^2+c^2)$ produces $\frac{1}{2}\ln(u^2+c^2)$, leading to a
 logarithmic result.
 \end{learnbox}
 
-% ── Example 2 ────────────────────────────────────────────────────────────────
-\begin{infobox}{Example 2: $\mathcal{L}\{\sin(2t)/t\}$}
+% -- Example 2 ----------------------------------------------------------------
+\begin{infobox}{Example 2: $\mathcal{L}\!\left\{\frac{\sin(2t)}{t}\right\}$}
 \textbf{Given:} Find $\mathcal{L}\!\left\{\dfrac{\sin 2t}{t}\right\}$.
 
 \textbf{Step 1 --- Existence condition.}
@@ -466,8 +468,8 @@ $\dfrac{\pi}{2} - \arctan\!\left(\dfrac{s}{a}\right)$.
 When $a=1$ this reduces to the sinc-function result from Section 5.
 \end{learnbox}
 
-% ── Example 3 ────────────────────────────────────────────────────────────────
-\begin{infobox}{Example 3: $\mathcal{L}\{(e^{-t}-e^{-2t})/t\}$}
+% -- Example 3 ----------------------------------------------------------------
+\begin{infobox}{Example 3: $\mathcal{L}\!\left\{\frac{e^{-t}-e^{-2t}}{t}\right\}$}
 \textbf{Given:} Find $\mathcal{L}\!\left\{\dfrac{e^{-t}-e^{-2t}}{t}\right\}$.
 
 \textbf{Step 1 --- Existence condition.}
@@ -526,9 +528,9 @@ $\pi/2 - \arctan(1) = \pi/2 - \pi/4 = \pi/4 \approx 0.7854$.
 \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\
 $t$ & $\sin(t)/t$ & $e^{-t}\sin(t)/t$ & Trap.\ weight $h/2$ & Cumulative sum \\
 \midrule
-0.001 & \texttt{=SIN(A2)/A2} & \texttt{=EXP(-A2)*SIN(A2)/A2} & \texttt{=0.1/2} & \texttt{=D2*(C2+C3)} \\
-0.101 & \texttt{=SIN(A3)/A3} & \texttt{=EXP(-A3)*SIN(A3)/A3} & \texttt{=0.1/2} & \texttt{=E2+D3*(C3+C4)} \\
-0.201 & \texttt{=SIN(A4)/A4} & \texttt{=EXP(-A4)*SIN(A4)/A4} & \texttt{=0.1/2} & \texttt{=E3+D4*(C4+C5)} \\
+0.001 & \texttt{=SIN(A2)/A2} & \texttt{=EXP(-A2)*B2} & \texttt{=0.1/2} & \texttt{0} \\
+0.101 & \texttt{=SIN(A3)/A3} & \texttt{=EXP(-A3)*B3} & \texttt{=0.1/2} & \texttt{=E2+D2*(C2+C3)} \\
+0.201 & \texttt{=SIN(A4)/A4} & \texttt{=EXP(-A4)*B4} & \texttt{=0.1/2} & \texttt{=E3+D3*(C3+C4)} \\
 $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
 20.001 & \texttt{=SIN(A202)/A202} & \texttt{=EXP(-A202)*B202} & \texttt{=0.1/2} & (final sum) \\
 \bottomrule
@@ -541,28 +543,30 @@ $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
   \item In \textbf{A2} enter \texttt{0.001} (avoid $t=0$ to prevent division by zero).
         In \textbf{A3} enter \texttt{=A2+0.1}. Fill down to $t\approx 20$.
   \item \textbf{Column B}: \texttt{=SIN(A2)/A2}. Fill down.
-  \item \textbf{Column C}: \texttt{=EXP(-A2)*SIN(A2)/A2} (this is the integrand
+  \item \textbf{Column C}: \texttt{=EXP(-A2)*B2} (this is the integrand
         $e^{-st}\sin(t)/t$ at $s=1$). Fill down.
   \item \textbf{Column D}: enter the trapezoid half-step weight \texttt{=0.1/2}
         in each row.
-  \item \textbf{Column E} (E2): \texttt{=D2*(C2+C3)}.
-        \textbf{E3 onwards}: \texttt{=E2+D3*(C3+C4)}. This accumulates the
+  \item \textbf{Column E} (\textbf{E2}): \texttt{0} (initial cumulative integral at $t_0$).\\
+        \textbf{E3 onwards}: \texttt{=E2+D2*(C2+C3)}. This accumulates the
         trapezoidal approximation.
   \item Read the last entry in column E: it should be close to $0.7854$.
   \item In a nearby cell enter the exact value: \texttt{=PI()/4} ($\approx 0.7854$).
   \item Compute the relative error: \texttt{=(E\_final-PI()/4)/(PI()/4)*100\%}.
 \end{enumerate}
 
-\noindent\textbf{Sample rows} (3 representative values):
+\noindent\textbf{Sample rows} (representative values):
 
 \begin{center}
 \begin{tabular}{@{}ccccc@{}}
 \toprule
 $t$ & $\sin(t)/t$ & $e^{-t}\sin(t)/t$ & $h/2$ & Cum.\ Sum \\
 \midrule
-0.001 & 0.99999983 & 0.99899983 & 0.05 & 0.09985 \\
-1.001 & 0.84622 & 0.30959 & 0.05 & (accumulated) \\
-10.001 & $-0.05440$ & $0.0000245$ & 0.05 & (accumulated) \\
+0.001 & 0.99999983 & 0.99899983 & 0.05 & 0.00000 \\
+0.101 & 0.99829983 & 0.90238120 & 0.05 & 0.09985 \\
+1.001 & 0.84114701 & 0.30932822 & 0.05 & 0.58432 \\
+10.001 & $-0.054399$ & $-0.0000025$ & 0.05 & 0.78538 \\
+20.001 & 0.045647 & $0.0000000$ & 0.05 & 0.78539 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -582,7 +586,7 @@ import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ── 1. Symbolic computation of L{sin(t)/t} ──────────────────────────────────
+# -- 1. Symbolic computation of L{sin(t)/t} ----------------------------------
 u, s = sp.symbols('u s', positive=True)
 
 F_u = 1 / (u**2 + 1)                          # F(u) = L{sin t} at u
@@ -591,7 +595,7 @@ transform_simplified = sp.simplify(transform_expr)
 print("Symbolic result: L{sin(t)/t} =", transform_simplified)
 # Expected output: Symbolic result: L{sin(t)/t} = pi/2 - atan(s)
 
-# ── 2. Numerical evaluation at selected s values ────────────────────────────
+# -- 2. Numerical evaluation at selected s values ----------------------------
 s_vals = [0.0, 0.5, 1.0, 2.0, 5.0]
 exact_formula = lambda sv: np.pi/2 - np.arctan(sv)
 
@@ -610,7 +614,7 @@ for sv in s_vals:
 # 2.0    0.463648                  0.463648
 # 5.0    0.197396                  0.197396
 
-# ── 3. Plot the transform function pi/2 - arctan(s) ─────────────────────────
+# -- 3. Plot the transform function pi/2 - arctan(s) -------------------------
 s_plot = np.linspace(0.01, 10, 400)
 F_plot = np.pi/2 - np.arctan(s_plot)
 
@@ -739,8 +743,8 @@ The matplotlib plot visualises this decay.
   $f(t)/t$ (divide by $t$) & $\int_s^\infty F(u)\,du$ & 11 \\
   \bottomrule
   \end{tabular}\smallskip\\
-  The symmetry: differentiation/integration in $t$ ↔ algebraic ops in $s$;
-  multiplication/division by $t$ ↔ differentiation/integration in $s$.
+  The symmetry: differentiation/integration in $t$ $\leftrightarrow$ algebraic ops in $s$;
+  multiplication/division by $t$ $\leftrightarrow$ differentiation/integration in $s$.
   This duality makes the Laplace transform a ``dictionary'' between two
   domains, each having its own analogue of the fundamental theorem of calculus.
 
@@ -762,8 +766,8 @@ The matplotlib plot visualises this decay.
    = \frac{1}{2}\!\left(\dfrac{\pi}{2}-\arctan\!\left(\dfrac{s}{2}\right)\right)$.
 
 \item Find $\mathcal{L}\!\left\{\dfrac{e^{-at}-e^{-bt}}{t}\right\}$ for $a,b>0$ and $s>0$.\\
-  \textit{Hint:} General formula $\ln\dfrac{s-b}{s-a}$ with $a\to -a$, $b\to -b$
-  gives $\ln\dfrac{s+a}{s+b}$.
+  \textit{Hint:} $\mathcal{L}\{e^{-at}-e^{-bt}\} = \dfrac{1}{s+a} - \dfrac{1}{s+b}$;
+  integrating from $s$ to $\infty$ gives $\ln\!\left(\dfrac{s+b}{s+a}\right)$.
 
 \item Does $\mathcal{L}\!\left\{\dfrac{\cos(at)}{t}\right\}$ exist? Justify fully.\\
   \textit{Hint:} Check the existence condition:
@@ -776,9 +780,9 @@ The matplotlib plot visualises this decay.
   Integrate from $s$ to $\infty$: result is $\dfrac{1}{4}\ln\dfrac{s^2+4}{s^2}$.
 
 \item Find $\mathcal{L}\!\left\{\dfrac{\cosh(at)-1}{t}\right\}$.\\
-  \textit{Hint:} $\mathcal{L}\{\cosh(at)-1\} = s/(s^2-a^2) - 1/s$.
+  \textit{Hint:} $\mathcal{L}\{\cosh(at)-1\} = \dfrac{s}{s^2-a^2} - \dfrac{1}{s}$.
   Existence: $(\cosh(at)-1)/t \to 0$ as $t\to 0$ (since $\cosh(0)=1$).
-  Integrate: $\frac{1}{2}\ln\dfrac{s^2-a^2}{s^2}$ (for $s>a>0$).
+  Integrate from $s$ to $\infty$: $\dfrac{1}{2}\ln\!\left(\dfrac{s^2}{s^2-a^2}\right)$ (for $s>a>0$).
 
 \end{enumerate}
 
@@ -828,7 +832,7 @@ by $t$ corresponds to which $s$-domain operation?
   \item Dividing $F(s)$ by $s$
   \item \textbf{Integrating $F(s)$ from $s$ to $\infty$}
 \end{enumerate}
-\textit{Explanation:} Multiply by $t$ ↔ differentiate; divide by $t$ ↔ integrate
+\textit{Explanation:} Multiply by $t$ $\leftrightarrow$ differentiate; divide by $t$ $\leftrightarrow$ integrate
 from $s$ to $\infty$. These are dual operations.
 
 \medskip

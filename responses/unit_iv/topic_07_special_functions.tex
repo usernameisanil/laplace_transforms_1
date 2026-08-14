@@ -30,8 +30,8 @@
 
 % ── title ─────────────────────────────────────────────────────────────────────
 \title{Topic 07: Special Functions \\ \large Unit IV --- Laplace Transforms}
-\author{23A54201 --- Mathematics IV (Transform Techniques) \\
-        JNTUA College of Engineering (Autonomous)}
+\author{ \\
+        JNTUA College of Engineering (Autonomous) ATP}
 \date{}
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -365,7 +365,7 @@ Therefore
 
 \medskip
 \textbf{Connection to the Laplace transform.}
-Substituting $t = su$ in the definition of $\mathcal{L}\{t^n\}$:
+Substituting $u = st$ (so $t = u/s$, $dt = du/s$) in the definition of $\mathcal{L}\{t^n\}$:
 \[
   \mathcal{L}\{t^n\} = \int_0^{\infty} e^{-st}\,t^n\,dt
   = \frac{1}{s^{n+1}}\int_0^{\infty} e^{-u}\,u^n\,du
@@ -466,13 +466,13 @@ in Unit V applications.
 \begin{axis}[
   title={Bessel Function $J_0(t)$},
   xlabel={$t$}, ylabel={$J_0(t)$},
-  xmin=0, xmax=20, ymin=-0.5, ymax=1.1,
+  xmin=0, xmax=4.5, ymin=-0.5, ymax=1.1,
   grid=major,
   width=12cm, height=6cm
 ]
-  % Approximate J0(t) via the series for small t and known zeros for larger t
-  % We use domain sampling: plot computed via series truncated to 10 terms
-  \addplot[blue, very thick, samples=200, domain=0:20]
+  % Approximate J0(t) via the series for small t
+  % Series accurate on domain [0, 4.5] (first zero at t ≈ 2.405, minimum near t ≈ 3.83)
+  \addplot[blue, very thick, samples=100, domain=0:4.5]
     { 1
       - x^2/4
       + x^4/64
@@ -629,7 +629,7 @@ $\Gamma(1/2) = \sqrt{\pi}$.
 \end{learnbox}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\section{Excel Example (MANDATORY)}
+\section{Excel Example }
 % ═════════════════════════════════════════════════════════════════════════════
 
 \subsection*{Numerical Approximation of $\Gamma(3/2)$ Using the Trapezoidal Rule}
@@ -681,7 +681,7 @@ with a simple spreadsheet.
 \end{learnbox}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\section{Python Example (MANDATORY)}
+\section{Python Example }
 % ═════════════════════════════════════════════════════════════════════════════
 
 The script below uses \texttt{scipy.special}, \texttt{sympy}, and
